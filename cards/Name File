@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <h1>Tyler Rye</h1>
+</body>
+</html>
+
+<iframe class="card" scrolling="no" src="cards/tron.html"></iframe>
+			<iframe class="card" scrolling="no" src="cards/currency.html"></iframe>
+			<iframe class="card" scrolling="no" style='width:400px;' src="cards/temperature.html"></iframe>
+		</div>
+	</BODY>
+</HTML>
+<iframe class="card" scrolling="no" src="cards/tron.html"></iframe>
+			<iframe class="card" scrolling="no" src="cards/currency.html"></iframe>
+			<iframe class="card" scrolling="no" style='width:400px;' src="cards/temperature.html"></iframe>
+			<iframe class="card" scrolling="no" src="cards/newcard.html"></iframe>
+		</div>
+	</BODY>
+</HTML>
