@@ -1,5 +1,6 @@
+console.log("✅ Connected to food.js!");
 const appId = "a4d8d4a4";     // Replace with your Nutritionix App ID
-const appKey = "4fedbbe998a6d7b66f98165324119d5d";   // Replace with your Nutritionix App Key
+const appKey = "b05d803a2597212e9a749bb57c321855";   // Replace with your Nutritionix App Key
 
 function searchFood() {
   const food = document.getElementById("foodInput").value;
@@ -17,13 +18,18 @@ function searchFood() {
   .then(data => {
     const item = data.foods[0];
     document.getElementById("results").innerHTML = `
-      <h2>${item.food_name}</h2>
-      <p>🍽️ Quantity: ${item.serving_qty} ${item.serving_unit}</p>
-      <p>🔥 Calories: ${item.nf_calories}</p>
-      <p>🥩 Fat: ${item.nf_total_fat}g</p>
-      <p>🍬 Sugar: ${item.nf_sugars}g</p>
-      <p>💪 Protein: ${item.nf_protein}g</p>
-    `;
+  <div class="card">
+    <h2>${item.food_name}</h2>
+    <table>
+      <tr><td><strong>Qty</strong></td><td>${item.serving_qty} ${item.serving_unit}</td></tr>
+      <tr><td><strong>Calories</strong></td><td>${item.nf_calories}</td></tr>
+      <tr><td><strong>Fat</strong></td><td>${item.nf_total_fat}g</td></tr>
+      <tr><td><strong>Sugar</strong></td><td>${item.nf_sugars}g</td></tr>
+      <tr><td><strong>Protein</strong></td><td>${item.nf_protein}g</td></tr>
+    </table>
+  </div>
+`;
+
   })
   .catch(err => {
     document.getElementById("results").innerHTML = "Oops! Something went wrong.";
