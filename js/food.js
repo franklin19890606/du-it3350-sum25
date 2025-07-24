@@ -17,19 +17,17 @@ function searchFood() {
   .then(res => res.json())
   .then(data => {
     const item = data.foods[0];
-    document.getElementById("results").innerHTML = `
-  <div class="card">
-    <h2>${item.food_name}</h2>
-    <table>
-      <tr><td><strong>Qty</strong></td><td>${item.serving_qty} ${item.serving_unit}</td></tr>
-      <tr><td><strong>Calories</strong></td><td>${item.nf_calories}</td></tr>
-      <tr><td><strong>Fat</strong></td><td>${item.nf_total_fat}g</td></tr>
-      <tr><td><strong>Sugar</strong></td><td>${item.nf_sugars}g</td></tr>
-      <tr><td><strong>Protein</strong></td><td>${item.nf_protein}g</td></tr>
-    </table>
-  </div>
-`;
 
+    const description = `
+      <div class="card">
+        <h2>Food: ${item.serving_unit} ${item.food_name}</h2>
+        Qty: ${item.serving_qty} Calories: ${item.nf_calories} <br>
+        Fat: ${item.nf_total_fat}g Sugar: ${item.nf_sugars}g <br>
+        Protein: ${item.nf_protein}g
+      </div>
+    `;
+
+    document.getElementById("results").innerHTML = description;
   })
   .catch(err => {
     document.getElementById("results").innerHTML = "Oops! Something went wrong.";
