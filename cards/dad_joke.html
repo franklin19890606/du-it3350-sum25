@@ -6,7 +6,7 @@
     <style>
         .joke-card {
             width: 185px;
-            height: 185px;
+            height: auto;
             border-radius: 4px;
             padding: 4px;
             box-sizing: border-box;
@@ -15,41 +15,90 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+			align-items: center;
         }
 		.joke-title {
 			font-size: 1.1em;
 			text-align: center;
 			font-weight: bold;
-			margin-bottom: 2px;
+			margin-bottom: 4px;
 		}
         .joke-setup {
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+			text-align: center;
+        }	
+        .vote-buttons {
+			display: flex;
+			gap: 10px;
+			margin-top: 5px;
         }
-        .joke-punchline {
-            font-style: italic;
-        }
+		.vote-buttons {
+			font-size: 1.2em;
+			cursor: pointer;
+		}
+		#vote-result {
+			font-size: 0.9em;
+			margin-top: 5px;
+			text-align: center;
+		}	
     </style>
 </head>
 <body>
     <div class="joke-card" id="jokeCard">
 		<div class="joke-title">Dad Joke Generator </div>
         <div class="joke-setup" id="setup">Loading joke...</div>
-        <div class="joke-punchline" id="punchline"></div>
+		<div class="vote-buttons">
+      <button id="thumbs-up">👍</button>
+      <button id="thumbs-down">👎</button>
+    </div>
+    <div id="vote-result"></div>
     </div>
 	<script>
-    	window.addEventListener("DOMContentLoaded", async () => {
-        	try {
-            	const response = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent("https://jokefather.com/api/jokes/random"));
-	            const result = await response.json();
-    	        const data = JSON.parse(result.contents); // parse inner JSON
-        	    document.getElementById("setup").textContent = data.setup;
-            	document.getElementById("punchline").textContent = data.punchline;
-	        } catch (error) {
-    	        document.getElementById("setup").textContent = "Oops! Could not load a joke.";
-        	    document.getElementById("punchline").textContent = "";
-            	console.error("Error fetching joke:", error);
-	        }
+    	document.addEventListener("DOMContentLoaded", function () {
+            const setupEl = document.getElementById("setup");
+      const thumbsUp = document.getElementById("thumbs-up");
+      const thumbsDown = document.getElementById("thumbs-down");
+      const voteResult = document.getElementById("vote-result");
+      let jokeLoaded = false;
+      let voted = false;
+      // Fetch dad joke from icanhazdadjoke (CORS-safe)
+      fetch("https://icanhazdadjoke.com/", {
+        headers: {
+          Accept: "application/json"
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          setupEl.textContent = data.joke;
+          jokeLoaded = true;
+        })
+        .catch(err => {
+          setupEl.textContent = "Oops! Could not load a joke.";
+          console.error("Fetch error:", err);
     	});
+			
+  // Handle voting
+      function handleVote(type) {
+        if (!jokeLoaded) {
+          alert("Please wait for the joke to load before voting.");
+          return;
+        }
+        if (voted) {
+          alert("You already voted. Reload to vote on another joke.");
+          return;
+        }
+
+        voted = true;
+        voteResult.textContent =
+          type === "up"
+            ? "😂 Glad you liked it!"
+            : "😐 Maybe the next one will be better.";
+      }
+
+      thumbsUp.addEventListener("click", () => handleVote("up"));
+      thumbsDown.addEventListener("click", () => handleVote("down"));
+    });
+			
 	</script>
 </body>
 </html>
