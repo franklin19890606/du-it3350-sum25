@@ -47,23 +47,38 @@
         <button class="button" onclick="loadDateTime()">Refresh</button>
     </div>
 
-    <script>
-        async function loadDateTime() {
-            try {
-                const res = await fetch('https://worldtimeapi.org/api/ip');
-                const data = await res.json();
-                const dateTime = new Date(data.datetime);
-                document.getElementById('date').textContent = dateTime.toLocaleDateString();
-                document.getElementById('time').textContent = dateTime.toLocaleTimeString();
-            } catch (err) {
-                console.error('Error fetching time:', err);
+   <script>
+    async function loadDateTime() {
+        try {
+            const res = await fetch('https://worldtimeapi.org/api/ip');
+
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+
+            const data = await res.json();
+
+            // Check if 'datetime' exists
+            if (!data.datetime) {
+                alert("Unexpected response from time server. Please try again later.");
                 document.getElementById('date').textContent = 'Error';
                 document.getElementById('time').textContent = 'Error';
+                return;
             }
-        }
 
-        // Auto-load on page load
-        window.addEventListener('load', loadDateTime);
-    </script>
+            const dateTime = new Date(data.datetime);
+            document.getElementById('date').textContent = dateTime.toLocaleDateString();
+            document.getElementById('time').textContent = dateTime.toLocaleTimeString();
+        } catch (err) {
+            alert("Failed to fetch date and time. Please check your internet connection.");
+            console.error('Error fetching time:', err);
+            document.getElementById('date').textContent = 'Error';
+            document.getElementById('time').textContent = 'Error';
+        }
+    }
+
+    // Auto-load on page load
+    window.addEventListener('load', loadDateTime);
+</script>
 </body>
 </html>
