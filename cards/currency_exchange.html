@@ -51,24 +51,36 @@
   let intervalId;
 
   async function fetchRates() {
+    console.log("fetchRates() called");
+
     document.getElementById('error').textContent = '';
     try {
       const res = await fetch(API_URL);
+      console.log("Response status:", res.status);
+
       if (!res.ok) throw new Error('API request failed');
 
       const data = await res.json();
+      console.log("API response data:", data);
+
       displayRates(data);
     } catch (error) {
       document.getElementById('error').textContent = 'Failed to load exchange rates.';
-      console.error(error);
+      console.error("Error fetching rates:", error);
     }
   }
 
   function displayRates(data) {
+    console.log("displayRates() called with data:", data);
+
+    debugger; // Pause here to step through DOM updates
+
     const ratesDiv = document.getElementById('rates');
     ratesDiv.innerHTML = '';
     currencies.forEach(curr => {
       const rate = data.rates[curr];
+      console.log(`Exchange rate for ${curr}:`, rate);
+
       const el = document.createElement('div');
       el.className = 'rate';
       el.textContent = `1 USD = ${rate} ${curr}`;
@@ -77,6 +89,7 @@
 
     const now = new Date();
     document.getElementById('updated').textContent = `Last updated: ${now.toLocaleString()}`;
+    console.log("Updated timestamp:", now.toLocaleString());
   }
 
   // Initial fetch and auto-refresh every 10 mins
