@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <title>Date and Time Card</title>
     <style>
-        .card {
-            width: 100vw;
-            height: 100vh;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 10px;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+  .card {
+  width: 100vw;
+  height: 100vh;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff;
+
+  /* Center children both vertically and horizontally */
+  display: flex;
+  flex-direction: column;     /* Stacks date/time and button vertically */
+  justify-content: center;    /* Vertical centering */
+  align-items: center;        /* Horizontal centering */
+
+  padding: 10px;
+}
         .label {
             font-weight: bold;
             font-size: 15px;
